@@ -7,8 +7,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="kafka-producer-twitter" />
-        <module name="kafka-basics" />
         <module name="kafka-consumer-elasticsearch" />
+        <module name="kafka-basics" />
       </profile>
     </annotationProcessing>
   </component>
