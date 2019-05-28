@@ -94,6 +94,12 @@ public class TwitterProducer {
         producerProperties.setProperty(ProducerConfig.MAX_IN_FLIGHT_REQUESTS_PER_CONNECTION, "5");
         producerProperties.setProperty(ProducerConfig.RETRIES_CONFIG, Integer.toString(Integer.MAX_VALUE));
 
+        // HIgh THroughput at the expense of little latency and higher CPU usage
+
+        producerProperties.setProperty(ProducerConfig.COMPRESSION_TYPE_CONFIG, "snappy");
+        producerProperties.setProperty(ProducerConfig.LINGER_MS_CONFIG, "20"); //20 ms
+        producerProperties.setProperty(ProducerConfig.BATCH_SIZE_CONFIG, Integer.toString(32 * 1024)); //32KB
+
         //create producer
         KafkaProducer<String,String>  kafkaProducer = new KafkaProducer<String, String>(producerProperties);
         return kafkaProducer;
@@ -103,7 +109,7 @@ public class TwitterProducer {
         Hosts hosebirdHosts = new HttpHosts(Constants.STREAM_HOST);
         StatusesFilterEndpoint hosebirdEndpoint = new StatusesFilterEndpoint();
 // Optional: set up some followings and track terms
-        List<String> terms = Lists.newArrayList("bitcoin");
+        List<String> terms = Lists.newArrayList("VeerSavarkar   ");
         hosebirdEndpoint.trackTerms(terms);
 
 // These secrets should be read from a config file
