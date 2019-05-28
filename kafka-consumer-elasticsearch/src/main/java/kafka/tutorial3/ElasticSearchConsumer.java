@@ -38,14 +38,22 @@ public class ElasticSearchConsumer {
 
         while(true) {
             ConsumerRecords<String,String> records = kafkaConsumer.poll(Duration.ofMillis(100));
-
+            logger.info("Fetched " + records.count() + " Records");
             for(ConsumerRecord<String,String> record : records) {
                 String id = getTweetId(record.value());
                 IndexRequest indexRequest = new IndexRequest("twitter","tweets", id).source(record.value(), XContentType.JSON);
                 IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
                 logger.info("Response : " + indexResponse.getId());
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
             }
+            logger.info("Commiting Offset");
+            kafkaConsumer.commitSync();
+            logger.info("Offset Commited");
 
             try {
                 Thread.sleep(1000);
@@ -74,6 +82,8 @@ public class ElasticSearchConsumer {
         consumerProperties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         consumerProperties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         consumerProperties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+        consumerProperties.setProperty(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
+        consumerProperties.setProperty(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "10");
 
         KafkaConsumer<String,String> consumer = new KafkaConsumer<String, String>(consumerProperties);
         consumer.subscribe(Collections.singleton(topic));
