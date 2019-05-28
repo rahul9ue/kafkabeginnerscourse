@@ -24,10 +24,13 @@ import java.util.concurrent.TimeUnit;
 public class TwitterProducer {
 
     Logger logger = LoggerFactory.getLogger(TwitterProducer.class.getName());
-    private String consumerKey="l8c4UYrB6PtLUyMpQdvrbh0cT";
-    private String consumerSecret = "Rxu22SYYgieQrDXUvGFPwsocFZpG3Vy4bO1SQSZTQQHCjHxV0k";
-    private String token = "3300408848-6iLaGlKkPq5sR7iiaO9WY0LzRQKdrDZOyNS118d";
-    private String tokenSecret = "Rngcjav4OGhCXn04T8E6yqCqyeFx6DHeyMdxo2orkMWTN";
+
+    //TODO Replace values for token, secret etc ..
+
+    private String consumerKey="REPLACE";
+    private String consumerSecret = "REPLACE";
+    private String token = "REPLACE";
+    private String tokenSecret = "REPLACE";
 
     private TwitterProducer() {
 

@@ -97,9 +97,11 @@ public class ElasticSearchConsumer {
 
     public static RestHighLevelClient createElasticSearchClient() {
 
-        String hostname="kafka-course-4043846946.ap-southeast-2.bonsaisearch.net";
-        String username = "c8ljxlmeqb";
-        String password = "8wsz7tltin";
+        //TODO Replace the values for hostname , username & password
+
+        String hostname="REPLACE_WITH_HOSTNAME";
+        String username = "REPLACE_WITH_USERNAME";
+        String password = "REPLACE_WITH_PASSWORD";
 
         final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
         credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(username,password));
