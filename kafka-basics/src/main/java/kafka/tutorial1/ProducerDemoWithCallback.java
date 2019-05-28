@@ -1,4 +1,4 @@
-package com.github.rahul9ue.kafka.tutorial1;
+package kafka.tutorial1;
 
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -6,12 +6,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
-import java.util.concurrent.ExecutionException;
 
-public class ProducerDemoKeys {
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+public class ProducerDemoWithCallback {
+    public static void main(String[] args) {
 
-        final Logger logger = LoggerFactory.getLogger(ProducerDemoKeys.class);
+        final Logger logger = LoggerFactory.getLogger(ProducerDemoWithCallback.class);
 
         String bootstrapServer = "127.0.1:9092";
         //create producer config
@@ -25,12 +24,8 @@ public class ProducerDemoKeys {
 
         //create producer record
         for(int i=0; i < 10; i++){
-            String topic = "first_topic";
-            String value = "Hello World " + i;
-            String key = "id_" + i;
+            final ProducerRecord<String, String> record = new ProducerRecord<String, String>("first_topic", "Hello World " + i);
 
-            final ProducerRecord<String, String> record = new ProducerRecord<String, String>(topic, key, value);
-            logger.info("Key = " + key);
             //send data
             kafkaProducer.send(record, new Callback() {
                 public void onCompletion(RecordMetadata recordMetadata, Exception e) {
@@ -46,7 +41,7 @@ public class ProducerDemoKeys {
 
                     }
                 }
-            }).get();
+            });
         }
 
         kafkaProducer.flush();
